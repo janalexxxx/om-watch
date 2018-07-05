@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.osx": {
+        "PATH": "/Users/Fiete/.platformio/penv/bin:/Users/Fiete/.platformio/penv:/Users/Fiete/.rvm/gems/ruby-2.4.1/bin:/Users/Fiete/.rvm/gems/ruby-2.4.1@global/bin:/Users/Fiete/.rvm/rubies/ruby-2.4.1/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/Fiete/.rvm/bin",
+        "PLATFORMIO_CALLER": "vscode"
+    }
+}
