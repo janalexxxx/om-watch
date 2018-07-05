@@ -36,6 +36,8 @@ int currentStartColor[3];
 int currentEndColor[3];
 int formerStartColor[3];
 int formerEndColor[3];
+int nextStartColor[3];
+int nextEndColor[3];
 
 int dotPos[2] = { 0, 0 };
 boolean showDot = true;
@@ -44,6 +46,57 @@ int dotColor[3] = { 0, 0, 255 };
 
 
 void setup() {
+  setEverythingUp();
+}
+
+
+void loop() {
+  displayColors(formerStartColor, formerEndColor, nextStartColor, nextEndColor, t);
+
+  if (t < TRANSITION_LENGTH) {
+    t++;
+  } else {
+    t = 0;
+    updateColors();
+  }
+}
+
+
+
+////////////////////////////////////////////
+// MAIN FUNCTIONS
+////////////////////////////////////////////
+void displayColors(int formerStartColor[3], int formerEndColor[3], int nextStartColor[3], int nextEndColor[3], int t) {
+  // mix in between former and next colors using t to define current colors
+  mixColorsAnimated(t, TRANSITION_LENGTH, formerStartColor, nextStartColor, currentStartColor);
+  mixColorsAnimated(t, TRANSITION_LENGTH, formerEndColor, nextEndColor, currentEndColor);
+  
+  // create gradient and update current colors
+  createGradient(45, currentStartColor, currentEndColor, positions, nextLEDColors);
+
+  // display current colors
+  for (int i = 0; i < TOTAL_NUM_LEDS; i++) {
+    if (i<24) {
+      outerStrip.setPixelColor(i, nextLEDColors[i][0], nextLEDColors[i][1], nextLEDColors[i][2]);
+    } else {
+      innerStrip.setPixelColor(i-24, nextLEDColors[i][0], nextLEDColors[i][1], nextLEDColors[i][2]);
+    }
+  }
+  outerStrip.show();
+  innerStrip.show();
+}
+
+
+void updateColors() {
+  // update the upcoming colors. formerColors = nextColors & nextColors = newColors
+}
+
+
+
+////////////////////////////////////////////
+// SETUP FUNCTION
+////////////////////////////////////////////
+void setEverythingUp() {
   // calculate position of each Neopixel LED and save in an array
   calcPositions(RESOLUTION, OUTER_NUM_LEDS, INNER_NUM_LEDS, RESOLUTION / 2, INNER_RADIUS);
   
@@ -75,41 +128,6 @@ void setup() {
     formerEndColor[i] = 255;
   }
 }
-
-void loop() {
-  if (t == 0) {
-    //setup a new gradient
-    currentStartColor[0] = 0;
-    currentStartColor[1] = 255;
-    currentStartColor[2] = 0;
-    currentEndColor[0] = 255;
-    currentEndColor[1] =255;
-    currentEndColor[2] = 0;
-    createGradient(45, currentStartColor, currentEndColor, positions, nextLEDColors);
-  }
-
-  // display current colors
-  for (int i = 0; i < TOTAL_NUM_LEDS; i++) {
-    if (i<24) {
-      outerStrip.setPixelColor(i, nextLEDColors[i][0], nextLEDColors[i][1], nextLEDColors[i][2]);
-    } else {
-      innerStrip.setPixelColor(i-24, nextLEDColors[i][0], nextLEDColors[i][1], nextLEDColors[i][2]);
-    }
-  }
-  outerStrip.show();
-  innerStrip.show();
-
-
-  if (t < TRANSITION_LENGTH) {
-    t++;
-  } else {
-    t = 0;
-  }
-}
-
-
-
-
 
 
 
@@ -216,18 +234,12 @@ void mixColorsAnimated(int t, int transitionLength, int startColor[3], int endCo
 }
 
 
-///////////////////////////////////////////////////////
-// BLURRED DOT THAT MOVES TOWARDS CENTER ANIMATION
-//////////////////////////////////////////////////////
-float distanceToDot(int dotX, int dotY, int pX, int pY) {
-  return sqrt((dotX - pX) * (dotX - pX) + (dotY - pY) * (dotY - pY));
+
+////////////////////////////////////////////
+// RAIN ANIMATION
+////////////////////////////////////////////
+void displayRain() {
+  
 }
-
-void moveDot() {
-
-}
-
-
-
 
 
