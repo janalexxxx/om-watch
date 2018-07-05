@@ -27,8 +27,6 @@ Adafruit_NeoPixel outerStrip = Adafruit_NeoPixel(OUTER_NUM_LEDS, OUTER_PIN, NEO_
 Adafruit_NeoPixel innerStrip = Adafruit_NeoPixel(INNER_NUM_LEDS, INNER_PIN, NEO_RGB + NEO_KHZ800);
 
 int positions[TOTAL_NUM_LEDS][2];
-float colorGrid[RESOLUTION][RESOLUTION][3];
-float interColorGrid[RESOLUTION][RESOLUTION][3];
 
 int currentLEDColors[TOTAL_NUM_LEDS][3];
 int formerLEDColors[TOTAL_NUM_LEDS][3];
